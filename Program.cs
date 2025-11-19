@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Parcial2DDA.Data;
+using Parcial2DDA.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,8 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<GestionRegistros>();
 
 
 // Add services to the container.

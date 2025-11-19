@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Parcial2DDA.Data;
 using Parcial2DDA.DTOs;
 using Parcial2DDA.Models;
+using Parcial2DDA.Utils;
 
 namespace Parcial2DDA.Controllers
 {
@@ -12,9 +13,12 @@ namespace Parcial2DDA.Controllers
     {
         private readonly AppDbContext _context;
 
-        public MedicionesController(AppDbContext context)
+        private readonly GestionRegistros _gestionRegistros;
+
+        public MedicionesController(AppDbContext context, GestionRegistros gestor)
         {
             _context = context;
+            _gestionRegistros = gestor;
         }
 
         [Route("/medicion")]
@@ -45,10 +49,24 @@ namespace Parcial2DDA.Controllers
             medicionNueva.Tipo = medicion.tipo;
             medicionNueva.FechaHora = DateTime.Now;
 
-            _context.Mediciones.Add(medicionNueva);
-            _context.SaveChanges();
+            if(medicionNueva.Tipo == "entrada")
+            {
+                _context.Mediciones.Add(medicionNueva);
+                _context.SaveChanges();
 
-            return Ok();
+                return Ok("Entreda registrada");
+            }
+
+            bool result = _gestionRegistros.CompletarMedicion(medicionNueva.Huella, medicionNueva);
+
+            if (result == false)
+            {
+                return NotFound("No se encontro el ingreso");
+            }
+            else
+            {
+                return Ok("Se completo la medicion");
+            }
         }
     }
 }
