@@ -4,7 +4,7 @@
     {
         public string huella {  get; set; }
 
-        public string peso { get; set; }
+        public decimal peso { get; set; }
 
         public string tipo { get; set; }
 

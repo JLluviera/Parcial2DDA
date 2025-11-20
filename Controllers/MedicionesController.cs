@@ -30,13 +30,6 @@ namespace Parcial2DDA.Controllers
                 return BadRequest("Debe ingresar una medicion");
             }
 
-            decimal peso;
-
-            if (!decimal.TryParse(medicion.peso, out peso)) 
-            {
-                return BadRequest("Peso invalido");
-            }
-
             if(medicion.tipo != "entrada" && medicion.tipo != "salida")
             {
                 return BadRequest("Tipo invalido");
@@ -45,7 +38,7 @@ namespace Parcial2DDA.Controllers
             Medicion medicionNueva = new Medicion();
 
             medicionNueva.Huella = medicion.huella;
-            medicionNueva.Peso = peso;
+            medicionNueva.Peso = medicion.peso;
             medicionNueva.Tipo = medicion.tipo;
             medicionNueva.FechaHora = DateTime.Now;
 
