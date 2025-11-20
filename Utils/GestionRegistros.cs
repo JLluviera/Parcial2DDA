@@ -29,6 +29,9 @@ namespace Parcial2DDA.Utils
 
             if (entrada == null)
             {
+                _context.Mediciones.Add(salida);
+                _context.SaveChanges();
+
                 return false;
             }
 
@@ -70,6 +73,27 @@ namespace Parcial2DDA.Utils
             int horas = minutos / 60;
 
             return $"{horas} horas, {minutos - (horas*60) } minutos";
+        }
+
+        public int CantMedicionesCompletas()
+        {
+            int result = _context.MedicionesCompletas.Count();
+
+            return result;
+        }
+
+        public decimal MaxDiferenciaDePeso()
+        {
+            decimal max = _context.MedicionesCompletas.Max(m => m.DiferenciaPeso);
+
+            return max;
+        }
+
+        public string MaximoTiempo()
+        {
+            int max = _context.MedicionesCompletas.Max(m => m.DuracionEnSegs);
+
+            return SegundosAString(max);
         }
     }
 }

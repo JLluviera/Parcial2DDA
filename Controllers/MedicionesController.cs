@@ -61,12 +61,13 @@ namespace Parcial2DDA.Controllers
 
             if (result == false)
             {
-                return NotFound("No se encontro el ingreso");
+                return NotFound("No se encontro el ingreso, salida guardada");
             }
             else
             {
                 return Ok("Se completo la medicion");
             }
         }
+
     }
 }
